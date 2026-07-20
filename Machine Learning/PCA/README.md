@@ -528,3 +528,461 @@ MSE : 0.02
 
 The remaining piece is **Part 3**, which provides the complete GitHub README mathematical formulation, including covariance matrices, eigenvalues, eigenvectors, principal components, explained variance, the PCA algorithm, and complexity analysis.
 
+# Principal Component Analysis (PCA)
+
+## Mathematical Formulation
+
+### 1. What is PCA?
+
+Principal Component Analysis (PCA) is an **unsupervised machine learning algorithm** used for **dimensionality reduction**. It transforms the original features into a new set of orthogonal features called **Principal Components**, which capture the maximum variance in the data.
+
+---
+
+# 2. Mean Centering
+
+The first step in PCA is to center the dataset by subtracting the mean of each feature.
+
+```text
+           n
+μ = (1/n) Σ Xi
+          i=1
+```
+
+Mean-centered data
+
+```text
+Xcentered = X − μ
+```
+
+Where
+
+- `X` = Original feature matrix
+- `μ` = Mean vector
+
+---
+
+# 3. Covariance Matrix
+
+The covariance matrix measures how features vary together.
+
+```text
+                    T
+          1
+Cov = -------- Xcentered Xcentered
+        n - 1
+```
+
+Where
+
+- `Cov` = Covariance Matrix
+- `Xcenteredᵀ` = Transpose of centered data
+- `n` = Number of samples
+
+---
+
+# 4. Eigenvalues and Eigenvectors
+
+PCA computes the eigenvalues and eigenvectors of the covariance matrix.
+
+
+::contentReference[oaicite:0]{index=0}
+
+
+The eigenvalue equation is
+
+```text
+Av = λv
+```
+
+Where
+
+- `A` = Covariance Matrix
+- `v` = Eigenvector
+- `λ` = Eigenvalue
+
+Each eigenvector represents a principal direction.
+
+Each eigenvalue represents the amount of variance captured along that direction.
+
+---
+
+# 5. Sorting Eigenvalues
+
+Arrange eigenvalues in descending order.
+
+```text
+λ₁ ≥ λ₂ ≥ λ₃ ≥ ... ≥ λn
+```
+
+The corresponding eigenvectors are rearranged in the same order.
+
+The first eigenvector corresponds to the first principal component.
+
+---
+
+# 6. Principal Components
+
+Select the first `k` eigenvectors.
+
+```text
+W = [v₁ v₂ ... vk]
+```
+
+Where
+
+- `W` = Projection matrix
+- `k` = Number of principal components
+
+---
+
+# 7. Data Projection
+
+Project the original data onto the new feature space.
+
+```text
+Z = Xcentered W
+```
+
+Where
+
+- `Z` = Reduced dataset
+- `W` = Principal component matrix
+
+---
+
+# 8. Explained Variance
+
+The variance explained by each principal component is
+
+```text
+Explained Variance
+
+=
+
+λi
+
+----------------
+
+Σ λ
+```
+
+The explained variance ratio indicates how much information is retained by each principal component.
+
+---
+
+# 9. Cumulative Explained Variance
+
+```text
+Cumulative Variance
+
+=
+
+Σ Explained Variance Ratio
+```
+
+This helps determine the number of principal components required.
+
+Example
+
+```text
+PC1 = 70%
+
+PC2 = 20%
+
+PC3 = 8%
+
+PC4 = 2%
+```
+
+Cumulative
+
+```text
+PC1
+
+70%
+
+PC1 + PC2
+
+90%
+
+PC1 + PC2 + PC3
+
+98%
+```
+
+---
+
+# 10. Reconstruction
+
+Original data can be approximately recovered.
+
+```text
+Xreconstructed
+
+=
+
+ZWᵀ + μ
+```
+
+Where
+
+- `Z` = Reduced data
+- `Wᵀ` = Transpose of principal components
+- `μ` = Mean vector
+
+---
+
+# 11. Complete PCA Algorithm
+
+### Step 1
+
+Load Dataset
+
+```text
+X
+```
+
+---
+
+### Step 2
+
+Compute Mean
+
+```text
+μ
+```
+
+---
+
+### Step 3
+
+Center the Data
+
+```text
+Xcentered = X − μ
+```
+
+---
+
+### Step 4
+
+Compute Covariance Matrix
+
+```text
+                    T
+          1
+Cov = -------- Xcentered Xcentered
+        n − 1
+```
+
+---
+
+### Step 5
+
+Compute Eigenvalues and Eigenvectors
+
+```text
+Av = λv
+```
+
+---
+
+### Step 6
+
+Sort Eigenvalues
+
+```text
+Largest → Smallest
+```
+
+---
+
+### Step 7
+
+Select Top K Eigenvectors
+
+```text
+W = [v₁,v₂,...,vk]
+```
+
+---
+
+### Step 8
+
+Project Data
+
+```text
+Z = XcenteredW
+```
+
+---
+
+### Step 9
+
+Use
+
+```text
+Z
+```
+
+for visualization, machine learning, or dimensionality reduction.
+
+---
+
+# Variables Summary
+
+| Symbol | Meaning |
+|---------|---------|
+| `X` | Original Feature Matrix |
+| `μ` | Mean Vector |
+| `Cov` | Covariance Matrix |
+| `λ` | Eigenvalue |
+| `v` | Eigenvector |
+| `W` | Principal Component Matrix |
+| `Z` | Reduced Dataset |
+| `k` | Number of Principal Components |
+
+---
+
+# Time Complexity
+
+## Mean Calculation
+
+```text
+O(ND)
+```
+
+---
+
+## Covariance Matrix
+
+```text
+O(ND²)
+```
+
+---
+
+## Eigenvalue Decomposition
+
+```text
+O(D³)
+```
+
+---
+
+## Projection
+
+```text
+O(NDK)
+```
+
+---
+
+## Overall Complexity
+
+```text
+O(D³ + ND²)
+```
+
+Where
+
+- `N` = Number of samples
+- `D` = Number of features
+- `K` = Number of principal components
+
+---
+
+# Space Complexity
+
+Covariance Matrix
+
+```text
+O(D²)
+```
+
+Projected Data
+
+```text
+O(NK)
+```
+
+Overall
+
+```text
+O(D² + NK)
+```
+
+---
+
+# Advantages
+
+- Reduces dimensionality.
+- Removes correlated features.
+- Speeds up machine learning algorithms.
+- Reduces storage requirements.
+- Helps visualize high-dimensional datasets.
+- Reduces noise while preserving important information.
+
+---
+
+# Disadvantages
+
+- Difficult to interpret transformed features.
+- Assumes linear relationships.
+- Sensitive to feature scaling.
+- Information may be lost when reducing dimensions.
+- Principal components may not have physical meaning.
+
+---
+
+# Applications
+
+- Data Compression
+- Image Compression
+- Face Recognition
+- Feature Extraction
+- Noise Reduction
+- Data Visualization
+- Preprocessing for Machine Learning
+- Bioinformatics
+- Finance
+- Computer Vision
+
+---
+
+# Workflow
+
+```text
+                Start
+                   │
+                   ▼
+            Load Dataset (X)
+                   │
+                   ▼
+          Compute Mean Vector (μ)
+                   │
+                   ▼
+         Center the Dataset (X − μ)
+                   │
+                   ▼
+      Compute Covariance Matrix
+                   │
+                   ▼
+Compute Eigenvalues & Eigenvectors
+                   │
+                   ▼
+      Sort Eigenvalues Descending
+                   │
+                   ▼
+ Select Top K Eigenvectors (W)
+                   │
+                   ▼
+      Project Data (Z = XW)
+                   │
+                   ▼
+ Reduced Dimensional Dataset
+                   │
+                   ▼
+        Machine Learning / Visualization
+
+
