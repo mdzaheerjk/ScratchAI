@@ -227,3 +227,304 @@ mean.shape = (10,)
 ```
 
 This completes the **entire PCA implementation class**. The next part will cover **training, transformation, inverse transformation, visualization, and example usage**.
+## Part 2: Training, Transformation, Inverse Transform, Explained Variance, and Example Usage
+
+> Save this as **`main.py`** (or place it below your `PCA` class).
+
+```python id="5a8n2m"
+import numpy as np
+
+
+#########################################################
+# Example Dataset
+#########################################################
+
+X = np.array([
+    [2.5, 2.4],
+    [0.5, 0.7],
+    [2.2, 2.9],
+    [1.9, 2.2],
+    [3.1, 3.0],
+    [2.3, 2.7],
+    [2.0, 1.6],
+    [1.0, 1.1],
+    [1.5, 1.6],
+    [1.1, 0.9]
+])
+
+
+#########################################################
+# Create PCA Model
+#########################################################
+
+pca = PCA(n_components=1)
+
+
+#########################################################
+# Fit PCA
+#########################################################
+
+pca.fit(X)
+
+
+#########################################################
+# Transform Dataset
+#########################################################
+
+X_transformed = pca.transform(X)
+
+
+#########################################################
+# Fit + Transform
+#########################################################
+
+X_projected = pca.fit_transform(X)
+
+
+#########################################################
+# Inverse Transform
+#########################################################
+
+X_reconstructed = pca.inverse_transform(
+    X_projected
+)
+
+
+#########################################################
+# Mean Vector
+#########################################################
+
+print("=" * 60)
+print("Mean Vector")
+print("=" * 60)
+
+print(pca.get_mean())
+
+
+#########################################################
+# Eigenvalues
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Eigenvalues")
+print("=" * 60)
+
+print(pca.get_eigenvalues())
+
+
+#########################################################
+# Principal Components
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Principal Components")
+print("=" * 60)
+
+print(pca.get_components())
+
+
+#########################################################
+# Explained Variance Ratio
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Explained Variance Ratio")
+print("=" * 60)
+
+print(
+    pca.get_explained_variance_ratio()
+)
+
+
+#########################################################
+# Cumulative Explained Variance
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Cumulative Explained Variance")
+print("=" * 60)
+
+print(
+    pca.get_cumulative_variance()
+)
+
+
+#########################################################
+# Original Dataset
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Original Dataset")
+print("=" * 60)
+
+print(X)
+
+
+#########################################################
+# Reduced Dataset
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Reduced Dataset")
+print("=" * 60)
+
+print(X_projected)
+
+
+#########################################################
+# Reconstructed Dataset
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Reconstructed Dataset")
+print("=" * 60)
+
+print(X_reconstructed)
+
+
+#########################################################
+# Dimensions
+#########################################################
+
+print("\n")
+print("=" * 60)
+print("Shape Comparison")
+print("=" * 60)
+
+print("Original Shape      :", X.shape)
+
+print("Reduced Shape       :", X_projected.shape)
+
+print("Reconstructed Shape :", X_reconstructed.shape)
+
+
+#########################################################
+# Reconstruction Error
+#########################################################
+
+mse = np.mean(
+    (X - X_reconstructed) ** 2
+)
+
+print("\n")
+print("=" * 60)
+print("Reconstruction Error")
+print("=" * 60)
+
+print("MSE :", mse)
+
+
+#########################################################
+# Transform New Samples
+#########################################################
+
+X_new = np.array([
+    [2.0, 2.1],
+    [1.2, 1.3],
+    [3.0, 3.2]
+])
+
+new_projection = pca.transform(X_new)
+
+print("\n")
+print("=" * 60)
+print("New Samples")
+print("=" * 60)
+
+print(X_new)
+
+print("\nProjected Samples")
+
+print(new_projection)
+
+
+#########################################################
+# Recover New Samples
+#########################################################
+
+new_reconstructed = pca.inverse_transform(
+    new_projection
+)
+
+print("\n")
+print("=" * 60)
+print("Recovered Samples")
+print("=" * 60)
+
+print(new_reconstructed)
+```
+
+---
+
+## Expected Output (Approximate)
+
+```text
+============================================================
+Mean Vector
+============================================================
+[1.81 1.91]
+
+============================================================
+Eigenvalues
+============================================================
+[1.28402771 0.0490834 ]
+
+============================================================
+Principal Components
+============================================================
+[[ 0.6778734 ]
+ [ 0.73517866]]
+
+============================================================
+Explained Variance Ratio
+============================================================
+[0.96318131]
+
+============================================================
+Cumulative Explained Variance
+============================================================
+[0.96318131]
+
+============================================================
+Original Shape
+============================================================
+(10, 2)
+
+Reduced Shape
+============================================================
+(10, 1)
+
+Reconstructed Shape
+============================================================
+(10, 2)
+
+============================================================
+Reconstruction Error
+============================================================
+MSE : 0.02
+```
+
+### What this example demonstrates
+
+* Fits PCA on the dataset.
+* Reduces the data from **2 dimensions to 1 principal component**.
+* Computes and prints:
+
+  * Mean vector
+  * Eigenvalues
+  * Principal components
+  * Explained variance ratio
+  * Cumulative explained variance
+* Reconstructs the original data from the reduced representation.
+* Calculates the **Mean Squared Reconstruction Error (MSE)**.
+* Projects and reconstructs **new unseen samples**.
+
+The remaining piece is **Part 3**, which provides the complete GitHub README mathematical formulation, including covariance matrices, eigenvalues, eigenvectors, principal components, explained variance, the PCA algorithm, and complexity analysis.
+
