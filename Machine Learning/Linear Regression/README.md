@@ -113,3 +113,131 @@ MSE: 0.0
 R2 Score: 1.0
 ```
 
+## Mathematical Formulation
+
+### 1. Linear Equation (Prediction)
+
+For a single feature:
+
+```text
+y = mx + c
+```
+
+For multiple features:
+
+```text
+ŷ = XW + b
+```
+
+Where:
+- `X` = Feature matrix
+- `W` = Weight vector
+- `b` = Bias (intercept)
+- `ŷ` = Predicted values
+
+---
+
+### 2. Mean Squared Error (Cost Function)
+
+```text
+              n
+MSE = (1 / n) Σ (yi - ŷi)²
+             i=1
+```
+
+Where:
+- `n` = Number of training samples
+- `yi` = Actual value
+- `ŷi` = Predicted value
+
+---
+
+### 3. Gradient of Weights
+
+```text
+dW = (2 / n) × Xᵀ × (ŷ - y)
+```
+
+---
+
+### 4. Gradient of Bias
+
+```text
+db = (2 / n) × Σ(ŷ - y)
+```
+
+---
+
+### 5. Gradient Descent Update
+
+**Update Weights**
+
+```text
+W = W - α × dW
+```
+
+**Update Bias**
+
+```text
+b = b - α × db
+```
+
+Where:
+- `W` = Weight vector
+- `b` = Bias
+- `α` = Learning rate
+- `dW` = Gradient of weights
+- `db` = Gradient of bias
+
+---
+
+## Variables Summary
+
+| Symbol | Meaning |
+|--------|---------|
+| `X` | Feature matrix |
+| `y` | Actual target values |
+| `ŷ` | Predicted target values |
+| `W` | Weight vector |
+| `b` | Bias (intercept) |
+| `n` | Number of training samples |
+| `α` | Learning rate |
+| `dW` | Gradient of weights |
+| `db` | Gradient of bias |
+
+---
+
+## Gradient Descent Algorithm
+
+1. Compute predictions
+
+```text
+ŷ = XW + b
+```
+
+2. Compute the Mean Squared Error (MSE)
+
+```text
+              n
+MSE = (1 / n) Σ (yi - ŷi)²
+             i=1
+```
+
+3. Compute gradients
+
+```text
+dW = (2 / n) × Xᵀ × (ŷ - y)
+
+db = (2 / n) × Σ(ŷ - y)
+```
+
+4. Update parameters
+
+```text
+W = W - α × dW
+
+b = b - α × db
+```
+
+Repeat these steps until the specified number of epochs is reached or the model converges.
+
